@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Дмитрий Рябинин](https://up.htmlacademy.ru/react/8/user/63289).
-* Наставник: [Роман Решетников](https://up.htmlacademy.ru/react/8/user/63289).
+* Наставник: [Роман Решетников](https://up.htmlacademy.ru/react/8/user/1919895).
 
 ---
 
