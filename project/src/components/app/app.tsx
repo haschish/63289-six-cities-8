@@ -1,11 +1,38 @@
 import MainPage from '../main-page/main-page';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page';
+import LoginPage from '../login-page/login-page';
+import FavoritesPage from '../favorites-page/favorites-page';
+import PropertyPage from '../property-page/property-page';
+import PrivateRoute from '../private-route/private-route';
+import { AppRoute, AuthStatus } from '../../const';
 
 type AppProps = {
   numberOfOffers: number,
 }
 
 function App(props: AppProps): JSX.Element {
-  return <MainPage numberOfOffers={props.numberOfOffers}/>;
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path={AppRoute.Main} exact>
+          <MainPage numberOfOffers={props.numberOfOffers}/>
+        </Route>
+        <Route path={AppRoute.SignIn} exact>
+          <LoginPage />
+        </Route>
+        <PrivateRoute path={AppRoute.Favorites} exact authStatus={AuthStatus.NoAuthorized} redirect={AppRoute.SignIn}>
+          <FavoritesPage />
+        </PrivateRoute>
+        <Route path={AppRoute.Room} exact>
+          <PropertyPage />
+        </Route>
+        <Route >
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;
