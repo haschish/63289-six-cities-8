@@ -1,10 +1,11 @@
+import { Hotel } from '../../types/hotel';
 import PlaceCard from '../place-card/place-card';
 
 type MainPageProps = {
-  numberOfOffers: number,
+  offers: Hotel[],
 };
 
-function MainPage({numberOfOffers}: MainPageProps): JSX.Element {
+function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -94,7 +95,7 @@ function MainPage({numberOfOffers}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(numberOfOffers).fill(null).map(() => <PlaceCard key={`place-card-${Math.random()}`}/>)}
+                {offers.map((it) => <PlaceCard key={`place-card-${Math.random()}`} data={it}/>)}
               </div>
             </section>
             <div className="cities__right-section">

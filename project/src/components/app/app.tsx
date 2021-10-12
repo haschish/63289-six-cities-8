@@ -6,9 +6,10 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute, AuthStatus } from '../../const';
+import { Hotel } from '../../types/hotel';
 
 type AppProps = {
-  numberOfOffers: number,
+  offers: Hotel[],
 }
 
 function App(props: AppProps): JSX.Element {
@@ -16,7 +17,7 @@ function App(props: AppProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage numberOfOffers={props.numberOfOffers}/>
+          <MainPage offers={props.offers}/>
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <LoginPage />
