@@ -21,7 +21,7 @@ function FavoritesList({offers}: FavoritesListProps): JSX.Element {
         <h1 className="favorites__title">Saved listing</h1>
       </section>
       <ul className="favorites__list">
-        {Array.from(map.keys()).map(it => <FavoriteItem key={`favorite-item-${it}`} title={it} offers={map.get(it) || []} />)}
+        {Array.from(map.keys()).map((it) => <FavoriteItem key={`favorite-item-${it}`} title={it} offers={map.get(it) || []} />)}
       </ul>
     </>
   );

@@ -1,4 +1,3 @@
-import { AppRoute } from '../../const';
 import { Hotel } from '../../types/hotel';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';

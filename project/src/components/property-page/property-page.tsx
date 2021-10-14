@@ -1,5 +1,5 @@
-import Header from "../header/header";
-import CommentForm from "./comment-form/comment-form";
+import Header from '../header/header';
+import CommentForm from './comment-form/comment-form';
 
 function PropertyPage(): JSX.Element {
   return (

@@ -1,5 +1,5 @@
-import { Hotel } from "../../types/hotel";
-import FavoriteCard from "./favorite-card";
+import { Hotel } from '../../types/hotel';
+import FavoriteCard from './favorite-card';
 
 type FavoriteItemProps = {
   title: string,

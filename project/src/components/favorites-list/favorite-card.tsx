@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { AppRoute } from "../../const";
-import { Hotel } from "../../types/hotel";
-import Rating from "../place-card/rating";
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { Hotel } from '../../types/hotel';
+import Rating from '../place-card/rating';
 
 type FavoriteCardProps = {
   offer: Hotel,
@@ -10,31 +10,31 @@ type FavoriteCardProps = {
 function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
-    <div className="favorites__image-wrapper place-card__image-wrapper">
-      <Link to={AppRoute.Room}>
-        <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
-      </Link>
-    </div>
-    <div className="favorites__card-info place-card__info">
-      <div className="place-card__price-wrapper">
-        <div className="place-card__price">
-          <b className="place-card__price-value">&euro;{offer.price}</b>
-          <span className="place-card__price-text">&#47;&nbsp;night</span>
-        </div>
-        <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-          <svg className="place-card__bookmark-icon" width="18" height="19">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">In bookmarks</span>
-        </button>
+      <div className="favorites__image-wrapper place-card__image-wrapper">
+        <Link to={AppRoute.Room}>
+          <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
+        </Link>
       </div>
-      <Rating value={offer.rating}/>
-      <h2 className="place-card__name">
-        <Link to={AppRoute.Room}>{offer.title}</Link>
-      </h2>
-      <p className="place-card__type">{offer.type}</p>
-    </div>
-  </article>
+      <div className="favorites__card-info place-card__info">
+        <div className="place-card__price-wrapper">
+          <div className="place-card__price">
+            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
+          </div>
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+            <svg className="place-card__bookmark-icon" width="18" height="19">
+              <use xlinkHref="#icon-bookmark"></use>
+            </svg>
+            <span className="visually-hidden">In bookmarks</span>
+          </button>
+        </div>
+        <Rating value={offer.rating}/>
+        <h2 className="place-card__name">
+          <Link to={AppRoute.Room}>{offer.title}</Link>
+        </h2>
+        <p className="place-card__type">{offer.type}</p>
+      </div>
+    </article>
   );
 }
 
