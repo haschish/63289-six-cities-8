@@ -22,8 +22,8 @@ function App(props: AppProps): JSX.Element {
         <Route path={AppRoute.SignIn} exact>
           <LoginPage />
         </Route>
-        <PrivateRoute path={AppRoute.Favorites} exact authStatus={AuthStatus.NoAuthorized} redirect={AppRoute.SignIn}>
-          <FavoritesPage />
+        <PrivateRoute path={AppRoute.Favorites} exact authStatus={AuthStatus.Authorized} redirect={AppRoute.SignIn}>
+          <FavoritesPage offers={props.offers}/>
         </PrivateRoute>
         <Route path={AppRoute.Room} exact>
           <PropertyPage />
