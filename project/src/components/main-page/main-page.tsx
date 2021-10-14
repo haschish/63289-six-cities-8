@@ -1,5 +1,6 @@
 import { Hotel } from '../../types/hotel';
-import PlaceCard from '../place-card/place-card';
+import PlacesList from '../places-list/places-list';
+
 
 type MainPageProps = {
   offers: Hotel[],
@@ -94,9 +95,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {offers.map((it) => <PlaceCard key={`place-card-${Math.random()}`} data={it}/>)}
-              </div>
+              <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

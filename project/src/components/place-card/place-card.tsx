@@ -4,11 +4,13 @@ import Rating from './rating';
 
 type PlaceCardProps = {
   data: Hotel,
+  onMouseOver?: () => void,
+  onMouseLeave?: () => void,
 }
 
-function PlaceCard({data}: PlaceCardProps): JSX.Element {
+function PlaceCard({data, onMouseOver, onMouseLeave}: PlaceCardProps): JSX.Element {
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {data.isPremium && <PremiumMark />}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
