@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { Hotel } from '../../types/hotel';
 import PremiumMark from './premium-mark';
 import Rating from './rating';
@@ -13,9 +15,9 @@ function PlaceCard({data, onMouseOver, onMouseLeave}: PlaceCardProps): JSX.Eleme
     <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {data.isPremium && <PremiumMark />}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={AppRoute.Room}>
           <img className="place-card__image" src={data.previewImage} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -32,7 +34,7 @@ function PlaceCard({data, onMouseOver, onMouseLeave}: PlaceCardProps): JSX.Eleme
         </div>
         <Rating value={data.rating}/>
         <h2 className="place-card__name">
-          <a href="#">{data.title}</a>
+          <Link to={AppRoute.Room}>{data.title}</Link>
         </h2>
         <p className="place-card__type">{data.type}</p>
       </div>

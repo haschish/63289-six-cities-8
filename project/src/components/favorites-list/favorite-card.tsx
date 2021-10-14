@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { AppRoute } from "../../const";
 import { Hotel } from "../../types/hotel";
 import Rating from "../place-card/rating";
 
@@ -9,9 +11,9 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
     <div className="favorites__image-wrapper place-card__image-wrapper">
-      <a href="#">
+      <Link to={AppRoute.Room}>
         <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
-      </a>
+      </Link>
     </div>
     <div className="favorites__card-info place-card__info">
       <div className="place-card__price-wrapper">
@@ -28,7 +30,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
       </div>
       <Rating value={offer.rating}/>
       <h2 className="place-card__name">
-        <a href="#">{offer.title}</a>
+        <Link to={AppRoute.Room}>{offer.title}</Link>
       </h2>
       <p className="place-card__type">{offer.type}</p>
     </div>
