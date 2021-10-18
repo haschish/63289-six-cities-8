@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Footer from '../footer/footer';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -43,11 +44,7 @@ function NotFoundPage(): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }
