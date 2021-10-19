@@ -1,15 +1,6 @@
+import { City } from './city';
+import { Location } from './location';
 import { User } from './user';
-
-export type Location = {
-  latitude: number,
-  longitude: number,
-  zoom: number,
-}
-
-export type City = {
-  name: string,
-  location: Location,
-}
 
 export type Good = 'Heating' | 'Kitchen' | 'Cable TV' | 'Washing machine' | 'Coffee machine' | 'Dishwasher';
 

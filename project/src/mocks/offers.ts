@@ -1,16 +1,11 @@
 import { Hotel } from '../types/hotel';
+import { cities } from './cities';
+
 
 export const offers: Hotel[] = [
   {
     bedrooms: 3,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Amsterdam',
-    },
+    city: cities[0],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     host: {
@@ -24,8 +19,8 @@ export const offers: Hotel[] = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 4,
@@ -37,14 +32,7 @@ export const offers: Hotel[] = [
   },
   {
     bedrooms: 2,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Amsterdam',
-    },
+    city: cities[0],
     description: 'A quiet cozy of Amsterdam.',
     goods: ['Washing machine', 'Coffee machine', 'Dishwasher'],
     host: {
@@ -58,8 +46,8 @@ export const offers: Hotel[] = [
     isFavorite: false,
     isPremium: true,
     location: {
-      latitude: 52.36514938496378,
-      longitude: 4.653877537499948,
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 5,
@@ -71,14 +59,7 @@ export const offers: Hotel[] = [
   },
   {
     bedrooms: 1,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Amsterdam',
-    },
+    city: cities[0],
     description: 'by the unique lightness of Amsterdam.',
     goods: ['Heating', 'Coffee machine', 'Dishwasher'],
     host: {
@@ -92,8 +73,8 @@ export const offers: Hotel[] = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.37514938496378,
-      longitude: 4.653877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 8,
     },
     maxAdults: 1,
@@ -105,14 +86,7 @@ export const offers: Hotel[] = [
   },
   {
     bedrooms: 3,
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Cologne',
-    },
+    city: cities[0],
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: ['Coffee machine', 'Dishwasher'],
     host: {
@@ -126,8 +100,8 @@ export const offers: Hotel[] = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.38514938496378,
-      longitude: 4.643877537499948,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 8,
     },
     maxAdults: 4,
