@@ -10,15 +10,15 @@ type CitiesMapProps = {
   offers: Hotel[],
 }
 
+const defaultIcon = leaflet.icon({
+  iconUrl: URL_PIN_DEFAULT,
+  iconSize: [27, 39],
+  iconAnchor: [27, 39],
+});
+
 function CitiesMap({offers}: CitiesMapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cities[0]);
-
-  const defaultIcon = leaflet.icon({
-    iconUrl: URL_PIN_DEFAULT,
-    iconSize: [27, 39],
-    iconAnchor: [27, 39],
-  });
 
   useEffect(() => {
     if (map) {
