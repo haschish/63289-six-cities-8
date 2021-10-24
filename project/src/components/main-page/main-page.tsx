@@ -1,4 +1,5 @@
 import { Hotel } from '../../types/hotel';
+import CitiesMap from '../cities-map/cities-map';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 
@@ -73,7 +74,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
               <PlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <CitiesMap offers={offers}/>
             </div>
           </div>
         </div>
