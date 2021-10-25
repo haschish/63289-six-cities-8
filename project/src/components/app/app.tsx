@@ -7,9 +7,13 @@ import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute, AuthStatus } from '../../const';
 import { Hotel } from '../../types/hotel';
+import { Review } from '../../types/review';
+import { reverse } from 'dns';
+import { reviews } from '../../mocks/reviews';
 
 type AppProps = {
   offers: Hotel[],
+  reviews: Review[],
 }
 
 function App(props: AppProps): JSX.Element {
@@ -26,7 +30,7 @@ function App(props: AppProps): JSX.Element {
           <FavoritesPage offers={props.offers}/>
         </PrivateRoute>
         <Route path={AppRoute.Room} exact>
-          <PropertyPage />
+          <PropertyPage reviews={props.reviews}/>
         </Route>
         <Route >
           <NotFoundPage />
