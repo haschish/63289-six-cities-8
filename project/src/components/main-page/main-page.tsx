@@ -1,5 +1,5 @@
 import { Hotel } from '../../types/hotel';
-import CitiesMap from '../cities-map/cities-map';
+import Map from '../map/map';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 
@@ -71,10 +71,10 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlacesList offers={offers} />
+              <PlacesList offers={offers} className="cities__places-list" classNameCard="cities__place-card" />
             </section>
             <div className="cities__right-section">
-              <CitiesMap offers={offers}/>
+              <Map offers={offers} className="cities__map"/>
             </div>
           </div>
         </div>

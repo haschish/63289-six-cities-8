@@ -3,11 +3,13 @@ import leaflet from 'leaflet';
 import useMap from '../../hooks/useMap';
 import { cities } from '../../mocks/cities';
 import 'leaflet/dist/leaflet.css';
+import classNames from 'classnames';
 import { Hotel } from '../../types/hotel';
 import { URL_PIN_DEFAULT } from '../../const';
 
-type CitiesMapProps = {
+type MapProps = {
   offers: Hotel[],
+  className?: string,
 }
 
 const defaultIcon = leaflet.icon({
@@ -16,7 +18,7 @@ const defaultIcon = leaflet.icon({
   iconAnchor: [27, 39],
 });
 
-function CitiesMap({offers}: CitiesMapProps): JSX.Element {
+function Map({offers, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cities[0]);
 
@@ -36,8 +38,8 @@ function CitiesMap({offers}: CitiesMapProps): JSX.Element {
   }, [map, offers]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={classNames('map', className)} ref={mapRef}></section>
   );
 }
 
-export default CitiesMap;
+export default Map;

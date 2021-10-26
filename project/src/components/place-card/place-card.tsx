@@ -3,16 +3,18 @@ import { AppRoute } from '../../const';
 import { Hotel } from '../../types/hotel';
 import PremiumMark from './premium-mark';
 import Rating from './rating';
+import classNames from 'classnames';
 
 type PlaceCardProps = {
   data: Hotel,
   onMouseOver?: () => void,
   onMouseLeave?: () => void,
+  className?: string,
 }
 
-function PlaceCard({data, onMouseOver, onMouseLeave}: PlaceCardProps): JSX.Element {
+function PlaceCard({data, onMouseOver, onMouseLeave, className}: PlaceCardProps): JSX.Element {
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+    <article className={classNames(className, 'place-card')} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
       {data.isPremium && <PremiumMark />}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={AppRoute.Room}>

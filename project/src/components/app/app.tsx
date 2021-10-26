@@ -30,7 +30,7 @@ function App(props: AppProps): JSX.Element {
           <FavoritesPage offers={props.offers}/>
         </PrivateRoute>
         <Route path={AppRoute.Room} exact>
-          <PropertyPage reviews={props.reviews}/>
+          <PropertyPage offers={props.offers} reviews={props.reviews}/>
         </Route>
         <Route >
           <NotFoundPage />
