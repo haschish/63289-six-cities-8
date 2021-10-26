@@ -1,1 +1,1 @@
-export const convertToPercentage = (value: number, maxValue = 5) => Math.min(value, maxValue) / maxValue * 100;
+export const convertToPercentage = (value: number, maxValue = 5): number => Math.min(value, maxValue) / maxValue * 100;

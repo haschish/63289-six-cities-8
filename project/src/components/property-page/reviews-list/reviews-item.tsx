@@ -1,5 +1,5 @@
-import { Review } from "../../../types/review";
-import { convertToPercentage } from "../../../util";
+import { Review } from '../../../types/review';
+import { convertToPercentage } from '../../../util';
 import dayjs from 'dayjs';
 
 type ReviewsItemProps = {

@@ -8,8 +8,6 @@ import PrivateRoute from '../private-route/private-route';
 import { AppRoute, AuthStatus } from '../../const';
 import { Hotel } from '../../types/hotel';
 import { Review } from '../../types/review';
-import { reverse } from 'dns';
-import { reviews } from '../../mocks/reviews';
 
 type AppProps = {
   offers: Hotel[],
