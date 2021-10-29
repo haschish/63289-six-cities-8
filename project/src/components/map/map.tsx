@@ -24,6 +24,8 @@ function Map({offers, className}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.markers?.clearLayers();
+
       offers.forEach((offer) => {
         leaflet
           .marker({
@@ -32,7 +34,7 @@ function Map({offers, className}: MapProps): JSX.Element {
           }, {
             icon: defaultIcon,
           })
-          .addTo(map);
+          .addTo(map.markers ? map.markers : map);
       });
     }
   }, [map, offers]);

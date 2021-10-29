@@ -13,3 +13,12 @@ export enum AuthStatus {
 export const URL_PIN_DEFAULT = 'img/pin.svg';
 
 export const URL_PIN_ACTIVE = '';
+
+export const cities = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];

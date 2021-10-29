@@ -2,20 +2,22 @@ import {RefObject, useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import { City } from '../types/city';
 
-type LeafletMap = leaflet.Map | null;
+type LeafletMap = leaflet.Map & {markers?: leaflet.LayerGroup} | null;
 
 function useMap(mapRef: RefObject<HTMLDivElement>, city: City): LeafletMap {
   const [map, setMap] = useState<LeafletMap>(null);
 
   useEffect(() => {
     if (mapRef.current !== null && map === null) {
-      const instance = leaflet.map(mapRef.current, {
+      const instance: LeafletMap = leaflet.map(mapRef.current, {
         center: {
           lat: city.location.latitude,
           lng: city.location.longitude,
         },
         zoom: city.location.zoom,
       });
+
+      instance.markers = leaflet.layerGroup().addTo(instance);
 
       leaflet
         .tileLayer(
