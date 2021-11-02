@@ -5,12 +5,9 @@ import { cities } from '../../mocks/cities';
 import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
 import { Hotel } from '../../types/hotel';
-import { URL_PIN_DEFAULT } from '../../const';
-
-type MapProps = {
-  offers: Hotel[],
-  className?: string,
-}
+import { URL_PIN_ACTIVE, URL_PIN_DEFAULT } from '../../const';
+import { State } from '../../types/state';
+import { connect, ConnectedProps } from 'react-redux';
 
 const defaultIcon = leaflet.icon({
   iconUrl: URL_PIN_DEFAULT,
@@ -18,7 +15,26 @@ const defaultIcon = leaflet.icon({
   iconAnchor: [27, 39],
 });
 
-function Map({offers, className}: MapProps): JSX.Element {
+const activeIcon = leaflet.icon({
+  iconUrl: URL_PIN_ACTIVE,
+  iconSize: [27, 39],
+  iconAnchor: [27, 39],
+});
+
+type MapProps = {
+  offers: Hotel[],
+  className?: string,
+}
+
+const mapStateToProps = ({hoveredHotel}: State) => ({
+  hoveredHotel,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ComponentProps = PropsFromRedux & MapProps;
+
+function Map({offers, className, hoveredHotel}: ComponentProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cities[0]);
 
@@ -32,16 +48,16 @@ function Map({offers, className}: MapProps): JSX.Element {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: defaultIcon,
+            icon: hoveredHotel?.id === offer.id ? activeIcon : defaultIcon,
           })
           .addTo(map.markers ? map.markers : map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, hoveredHotel]);
 
   return (
     <section className={classNames('map', className)} ref={mapRef}></section>
   );
 }
 
-export default Map;
+export default connector(Map);
