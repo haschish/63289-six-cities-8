@@ -1,12 +1,21 @@
+import { connect, ConnectedProps } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
 import { AuthStatus } from '../../const';
+import { State } from '../../types/state';
 
 type PrivateRouteProps = RouteProps & {
-  authStatus: AuthStatus,
   redirect?: string,
 }
 
-function PrivateRoute({authStatus, redirect, ...props}: PrivateRouteProps): JSX.Element {
+const mapStateToProps = ({authStatus}: State) => ({
+  authStatus,
+});
+
+const connector = connect(mapStateToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ComponentProps = PropsFromRedux & PrivateRouteProps;
+
+function PrivateRoute({authStatus, redirect, ...props}: ComponentProps): JSX.Element {
   if (authStatus === AuthStatus.Authorized) {
     return <Route {...props} />;
   } else if (redirect) {
@@ -16,4 +25,4 @@ function PrivateRoute({authStatus, redirect, ...props}: PrivateRouteProps): JSX.
   }
 }
 
-export default PrivateRoute;
+export default connector(PrivateRoute);

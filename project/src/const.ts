@@ -10,6 +10,7 @@ export enum AppRoute {
 export enum AuthStatus {
   Authorized = 'authorized',
   NoAuthorized = 'noAuthorized',
+  Unknown = 'unknown',
 }
 
 export const URL_PIN_DEFAULT = 'img/pin.svg';
@@ -34,4 +35,6 @@ export const cities = [
 
 export enum APIRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
