@@ -1,7 +1,10 @@
 import PlaceCard from '../place-card/place-card';
 import { Hotel } from '../../types/hotel';
-import { useState } from 'react';
+import { Dispatch } from 'react';
 import classNames from 'classnames';
+import { Actions } from '../../types/action';
+import { hoverHotel } from '../../store/action';
+import { connect, ConnectedProps } from 'react-redux';
 
 type PlacesListProps = {
   offers: Hotel[],
@@ -9,9 +12,17 @@ type PlacesListProps = {
   classNameCard?: string,
 }
 
-function PlacesList({offers, className, classNameCard}: PlacesListProps): JSX.Element {
-  const [, setSelected] = useState<Hotel>();
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onSelectCard(value?: Hotel) {
+    dispatch(hoverHotel(value));
+  },
+});
 
+const connector = connect(null, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ComponentProps = PropsFromRedux & PlacesListProps;
+
+function PlacesList({offers, className, classNameCard, onSelectCard}: ComponentProps): JSX.Element {
   return (
     <div className={classNames(className, 'places__list')}>
       {
@@ -20,8 +31,8 @@ function PlacesList({offers, className, classNameCard}: PlacesListProps): JSX.El
             className={classNameCard}
             key={`place-card-${it.id}`}
             data={it}
-            onMouseOver={() => setSelected(it)}
-            onMouseLeave={() => setSelected(undefined)}
+            onMouseOver={() => onSelectCard(it)}
+            onMouseLeave={() => onSelectCard(undefined)}
           />
         ))
       }
@@ -29,4 +40,4 @@ function PlacesList({offers, className, classNameCard}: PlacesListProps): JSX.El
   );
 }
 
-export default PlacesList;
+export default connector(PlacesList);
