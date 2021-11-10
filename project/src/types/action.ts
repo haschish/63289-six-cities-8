@@ -1,25 +1,21 @@
-import { Hotel } from './hotel';
-import { Sort } from './sort';
+import { AxiosInstance } from 'axios';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { changeCity, changeSort, hoverHotel, loadOffers } from '../store/action';
+import { State } from './state';
 
 export enum ActionType {
   ChangeCity = 'app/changeCity',
   ChangeSort = 'app/changeSort',
   HoverHotel = 'app/hoverHotel',
+  LoadOffers = 'data/loadOffers',
 }
 
-export type ChangeCityAction = {
-  type: ActionType.ChangeCity,
-  payload: string,
-}
+export type Actions =
+  ReturnType<typeof changeCity> |
+  ReturnType<typeof changeSort> |
+  ReturnType<typeof hoverHotel> |
+  ReturnType<typeof loadOffers>;
 
-export type ChangeSortAction = {
-  type: ActionType.ChangeSort,
-  payload: Sort,
-}
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 
-export type HoverHotelAction = {
-  type: ActionType.HoverHotel,
-  payload?: Hotel,
-}
-
-export type Actions = ChangeCityAction | ChangeSortAction | HoverHotelAction;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
