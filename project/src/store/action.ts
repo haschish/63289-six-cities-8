@@ -1,6 +1,7 @@
-import { AppRoute, AuthStatus } from '../const';
+import { AppRoute, AuthStatus, OfferStatus, ResourceStatus } from '../const';
 import { ActionType } from '../types/action';
 import { Hotel } from '../types/hotel';
+import { Review } from '../types/review';
 import { Sort } from '../types/sort';
 import { AuthInfo } from '../types/user';
 
@@ -44,4 +45,28 @@ export const redirectToRoute = (route: AppRoute) => ({
 
 export const requireLogout = () => ({
   type: ActionType.RequireLogout,
+} as const);
+
+export const loadOffer = (status: OfferStatus, offer?: Hotel) => ({
+  type: ActionType.LoadOffer,
+  payload: {
+    status,
+    offer
+  }
+} as const);
+
+export const loadReviews = (status: ResourceStatus, reviews: Review[] = []) => ({
+  type: ActionType.LoadReviews,
+  payload: {
+    status,
+    reviews,
+  }
+} as const);
+
+export const loadNearbyOffers = (status: ResourceStatus, offers: Hotel[] = []) => ({
+  type: ActionType.LoadNearbyOffers,
+  payload: {
+    status,
+    offers,
+  }
 } as const);

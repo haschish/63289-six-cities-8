@@ -13,6 +13,22 @@ export enum AuthStatus {
   Unknown = 'unknown',
 }
 
+export enum OfferStatus {
+  Loading = 'loading',
+  Loaded = 'loaded',
+  NotFound = 'notFound',
+  Error = 'error',
+  Unknown = 'unknown',
+}
+
+export enum ResourceStatus {
+  Loading = 'loading',
+  Loaded = 'loaded',
+  NotFound = 'notFound',
+  Error = 'error',
+  Unknown = 'unknown',
+}
+
 export const URL_PIN_DEFAULT = 'img/pin.svg';
 
 export const URL_PIN_ACTIVE = 'img/pin-active.svg';

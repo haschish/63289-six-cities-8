@@ -9,21 +9,51 @@ import ReviewsList from './reviews-list/reviews-list';
 import PropertyGallery from './property-gallery/property-gallery';
 import { Hotel } from '../../types/hotel';
 import InsideList from './inside-list/inside-list';
+import { useParams } from 'react-router';
+import { fetchOfferAction } from '../../store/api-action';
+import { ThunkAppDispatch } from '../../types/action';
+import { useEffect } from 'react';
+import { OfferStatus } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFound from '../not-found/not-found';
 
 type PropertyPageProps = {
-  offer: Hotel,
   reviews: Review[],
 }
-const mapStateToProps = ({offers}: State) => ({
+const mapStateToProps = ({offers, offer, offerStatus, reviews, nearbyOffers}: State) => ({
   offers,
+  offer,
+  offerStatus,
+  reviews,
+  nearbyOffers,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  loadOffer(id: number) {
+    dispatch(fetchOfferAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ComponentProps = PropsFromRedux & PropertyPageProps;
 
-function PropertyPage({reviews, offers, offer}: ComponentProps): JSX.Element {
-  const filteredOffers = offers.slice(0, 3);
+function PropertyPage(props: ComponentProps): JSX.Element {
+  const {reviews, offers, offer, offerStatus, loadOffer, nearbyOffers} = props;
+
+  const {id} = useParams<{id: string}>();
+
+  useEffect(() => {
+    loadOffer(parseInt(id, 10))
+  }, [id])
+
+  if (offerStatus === OfferStatus.Loading || offerStatus === OfferStatus.Unknown) {
+    return <LoadingScreen />;
+  }
+
+  if (offerStatus === OfferStatus.NotFound || offerStatus === OfferStatus.Error) {
+    return <NotFound />;
+  }
 
   return (
     <div className="page">
@@ -32,7 +62,7 @@ function PropertyPage({reviews, offers, offer}: ComponentProps): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <PropertyGallery images={offer.images} />
+            <PropertyGallery images={offer!.images} />
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
@@ -40,7 +70,7 @@ function PropertyPage({reviews, offers, offer}: ComponentProps): JSX.Element {
                 <span>Premium</span>
               </div>
               <div className="property__name-wrapper">
-                <h1 className="property__name">{offer.title}</h1>
+                <h1 className="property__name">{offer!.title}</h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -57,39 +87,37 @@ function PropertyPage({reviews, offers, offer}: ComponentProps): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {offer.type}
+                  {offer!.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {offer!.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer!.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{offer.price}</b>
+                <b className="property__price-value">&euro;{offer!.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
-                <InsideList data={offer.goods}/>
+                <InsideList data={offer!.goods}/>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={offer.host.avatar} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={offer!.host.avatar} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {offer.host.name}
+                    {offer!.host.name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  {offer!.host.isPro && <span className="property__user-status">Pro</span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {offer.description}
+                    {offer!.description}
                   </p>
                 </div>
               </div>
@@ -100,12 +128,12 @@ function PropertyPage({reviews, offers, offer}: ComponentProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offers={filteredOffers} className="property__map" />
+          <Map offers={nearbyOffers} className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={filteredOffers} className="near-places__list" classNameCard="near-places__card" />
+            <PlacesList offers={nearbyOffers} className="near-places__list" classNameCard="near-places__card" />
           </section>
         </div>
       </main>

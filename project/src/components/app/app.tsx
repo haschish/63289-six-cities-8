@@ -42,10 +42,8 @@ function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
         <PrivateRoute path={AppRoute.Favorites} exact redirect={AppRoute.SignIn}>
           <FavoritesPage offers={offers}/>
         </PrivateRoute>
-        <Route path={AppRoute.Room}
-          exact
-          render={(props) => <PropertyPage offer={offers[0]} reviews={reviews} />}
-        >
+        <Route path={AppRoute.Room}>
+          <PropertyPage />
         </Route>
         <Route >
           <NotFoundPage />

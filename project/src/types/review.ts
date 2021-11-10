@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User, UserFromServer } from './user';
 
 export type Review = {
   comment: string,
@@ -7,3 +7,7 @@ export type Review = {
   rating: number,
   user: User,
 }
+
+export type ReviewFromServer = Omit<Review, 'user'> & {
+  user: UserFromServer,
+};
