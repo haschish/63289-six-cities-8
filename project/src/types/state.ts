@@ -18,4 +18,5 @@ export type State = {
   reviewsStatus: ResourceStatus,
   nearbyOffers: Hotel[],
   nearbyOffersStatus: ResourceStatus,
+  reviewStatus: ResourceStatus,
 }

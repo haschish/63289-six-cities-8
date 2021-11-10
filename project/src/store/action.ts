@@ -51,8 +51,8 @@ export const loadOffer = (status: OfferStatus, offer?: Hotel) => ({
   type: ActionType.LoadOffer,
   payload: {
     status,
-    offer
-  }
+    offer,
+  },
 } as const);
 
 export const loadReviews = (status: ResourceStatus, reviews: Review[] = []) => ({
@@ -60,7 +60,7 @@ export const loadReviews = (status: ResourceStatus, reviews: Review[] = []) => (
   payload: {
     status,
     reviews,
-  }
+  },
 } as const);
 
 export const loadNearbyOffers = (status: ResourceStatus, offers: Hotel[] = []) => ({
@@ -68,5 +68,10 @@ export const loadNearbyOffers = (status: ResourceStatus, offers: Hotel[] = []) =
   payload: {
     status,
     offers,
-  }
+  },
+} as const);
+
+export const sendReview = (status: ResourceStatus) => ({
+  type: ActionType.SendReview,
+  payload: status,
 } as const);

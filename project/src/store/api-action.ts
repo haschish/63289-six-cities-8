@@ -1,11 +1,11 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { APIRoute, AppRoute, AuthStatus, OfferStatus, ResourceStatus } from '../const';
 import { AuthInfoFromServer, convertAuthInfoToClient, convertHotelToClient, convertReviewToClient, HotelFromServer } from '../server/adapter';
 import { dropToken, saveToken } from '../server/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { ReviewFromServer } from '../types/review';
-import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, redirectToRoute, requireAuthorization, requireLogout } from './action';
+import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, redirectToRoute, requireAuthorization, requireLogout, sendReview } from './action';
 
 
 export const fetchOffersAction = (): ThunkActionResult =>
@@ -73,5 +73,17 @@ export const fetchNearbyAction = (id: number): ThunkActionResult =>
     } catch (e) {
       dispatch(loadNearbyOffers(ResourceStatus.Error));
       // dispatch()
+    }
+  };
+
+export const addReviewAction = (id: number, comment: string, rating: number): ThunkActionResult =>
+  async(dispatch, _getState, api) => {
+    try {
+      dispatch(sendReview(ResourceStatus.Loading));
+      const {data} = await api.post<ReviewFromServer[]>(`/comments/${id}`, {comment, rating});
+      dispatch(sendReview(ResourceStatus.Loaded));
+      dispatch(loadReviews(ResourceStatus.Loaded, data.map((it) => convertReviewToClient(it))));
+    } catch (e) {
+      dispatch(sendReview(ResourceStatus.Error));
     }
   };

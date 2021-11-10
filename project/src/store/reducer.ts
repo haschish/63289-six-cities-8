@@ -15,6 +15,7 @@ const initialState: State = {
   reviewsStatus: ResourceStatus.Unknown,
   nearbyOffers: [],
   nearbyOffersStatus: ResourceStatus.Unknown,
+  reviewStatus: ResourceStatus.Unknown,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -28,6 +29,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.LoadOffer: return {...state, offerStatus: action.payload.status, offer: action.payload.offer};
     case ActionType.LoadReviews: return {...state, reviewsStatus: action.payload.status, reviews: action.payload.reviews};
     case ActionType.LoadNearbyOffers: return {...state, nearbyOffersStatus: action.payload.status, nearbyOffers: action.payload.offers};
+    case ActionType.SendReview: return {...state, reviewStatus: action.payload};
     default: return state;
   }
 };

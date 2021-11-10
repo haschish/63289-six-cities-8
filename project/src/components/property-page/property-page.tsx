@@ -1,5 +1,4 @@
 import { connect, ConnectedProps } from 'react-redux';
-import { Review } from '../../types/review';
 import { State } from '../../types/state';
 import Header from '../header/header';
 import Map from '../map/map';
@@ -7,25 +6,23 @@ import PlacesList from '../places-list/places-list';
 import CommentForm from './comment-form/comment-form';
 import ReviewsList from './reviews-list/reviews-list';
 import PropertyGallery from './property-gallery/property-gallery';
-import { Hotel } from '../../types/hotel';
 import InsideList from './inside-list/inside-list';
 import { useParams } from 'react-router';
 import { fetchOfferAction } from '../../store/api-action';
 import { ThunkAppDispatch } from '../../types/action';
 import { useEffect } from 'react';
-import { OfferStatus } from '../../const';
+import { AuthStatus, OfferStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFound from '../not-found/not-found';
 
 type PropertyPageProps = {
-  reviews: Review[],
 }
-const mapStateToProps = ({offers, offer, offerStatus, reviews, nearbyOffers}: State) => ({
-  offers,
+const mapStateToProps = ({offer, offerStatus, reviews, nearbyOffers, authStatus}: State) => ({
   offer,
   offerStatus,
   reviews,
   nearbyOffers,
+  authStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -39,13 +36,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ComponentProps = PropsFromRedux & PropertyPageProps;
 
 function PropertyPage(props: ComponentProps): JSX.Element {
-  const {reviews, offers, offer, offerStatus, loadOffer, nearbyOffers} = props;
+  const {reviews, offer, offerStatus, loadOffer, nearbyOffers, authStatus} = props;
 
   const {id} = useParams<{id: string}>();
 
   useEffect(() => {
-    loadOffer(parseInt(id, 10))
-  }, [id])
+    loadOffer(parseInt(id, 10));
+  }, [id]);
 
   if (offerStatus === OfferStatus.Loading || offerStatus === OfferStatus.Unknown) {
     return <LoadingScreen />;
@@ -124,7 +121,7 @@ function PropertyPage(props: ComponentProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
-                <CommentForm />
+                {authStatus === AuthStatus.Authorized && <CommentForm hotelId={parseInt(id, 10)}/>}
               </section>
             </div>
           </div>
