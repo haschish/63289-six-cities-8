@@ -1,21 +1,14 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AuthStatus } from '../../../const';
-import { RootState } from '../../../store/reducer';
-import { State } from '../../../types/state';
+import { getAuthInfo, getAuthStatus } from '../../../store/user-data/selectors';
 import SignIn from './sign-in';
 import SignOut from './sign-out';
 import UserItem from './user-item';
 
-const mapStateToProps = ({UserData}: RootState) => ({
-  authStatus: UserData.authStatus,
-  authInfo: UserData.authInfo,
-});
+function NavList(): JSX.Element {
+  const authStatus = useSelector(getAuthStatus);
+  const authInfo = useSelector(getAuthInfo);
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux;
-
-function NavList({authStatus, authInfo}: ComponentProps): JSX.Element {
   return (
     <ul className="header__nav-list">
       {authStatus === AuthStatus.Authorized && <UserItem authInfo={authInfo!}/>}
@@ -24,4 +17,4 @@ function NavList({authStatus, authInfo}: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(NavList);
+export default NavList;

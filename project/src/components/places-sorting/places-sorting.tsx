@@ -1,28 +1,16 @@
 import classNames from 'classnames';
-import { Dispatch, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { sortMap } from '../../const';
 import { changeSort } from '../../store/action';
-import { Actions } from '../../types/action';
-import { Sort } from '../../types/sort';
-import { State } from '../../types/state';
+import { getCurrentSort } from '../../store/app-process/selectors';
 
-const mapStateToProps = ({currentSort}: State) => ({
-  currentSort,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onClickOption(value: Sort) {
-    dispatch(changeSort(value));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux;
-
-function PlacesSorting({onClickOption, currentSort}: ComponentProps): JSX.Element {
+function PlacesSorting(): JSX.Element {
   const [focus, setFocus] = useState(false);
+
+  const currentSort = useSelector(getCurrentSort);
+
+  const dispatch = useDispatch();
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -41,7 +29,7 @@ function PlacesSorting({onClickOption, currentSort}: ComponentProps): JSX.Elemen
               className={classNames('places__option', {'places__option--active': (currentSort === key)})}
               tabIndex={0}
               onClick={() => {
-                onClickOption(key);
+                dispatch(changeSort(key));
                 setFocus(false);
               }}
             >
@@ -54,4 +42,4 @@ function PlacesSorting({onClickOption, currentSort}: ComponentProps): JSX.Elemen
   );
 }
 
-export default connector(PlacesSorting);
+export default PlacesSorting;

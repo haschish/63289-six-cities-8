@@ -1,22 +1,13 @@
 import { SyntheticEvent } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logoutAction } from '../../../store/api-action';
-import { ThunkAppDispatch } from '../../../types/action';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  logout() {
-    dispatch(logoutAction());
-  },
-});
+function SignOut(): JSX.Element {
+  const dispatch = useDispatch();
 
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux;
-
-function SignOut({logout}: ComponentProps): JSX.Element {
   const handleClick = (evt: SyntheticEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    logout();
+    dispatch(logoutAction());
   };
 
   return (
@@ -28,4 +19,4 @@ function SignOut({logout}: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(SignOut);
+export default SignOut;

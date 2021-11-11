@@ -6,9 +6,8 @@ import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
 import { Hotel } from '../../types/hotel';
 import { URL_PIN_ACTIVE, URL_PIN_DEFAULT } from '../../const';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../../store/reducer';
+import { useSelector } from 'react-redux';
+import { getHoveredHotel } from '../../store/app-process/selectors';
 
 const defaultIcon = leaflet.icon({
   iconUrl: URL_PIN_DEFAULT,
@@ -27,17 +26,10 @@ type MapProps = {
   className?: string,
 }
 
-const mapStateToProps = ({AppProcess}: RootState) => ({
-  hoveredHotel: AppProcess.hoveredHotel,
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux & MapProps;
-
-function Map({offers, className, hoveredHotel}: ComponentProps): JSX.Element {
+function Map({offers, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cities[0]);
+  const hoveredHotel = useSelector(getHoveredHotel);
 
   useEffect(() => {
     if (map) {
@@ -61,4 +53,4 @@ function Map({offers, className, hoveredHotel}: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(Map);
+export default Map;

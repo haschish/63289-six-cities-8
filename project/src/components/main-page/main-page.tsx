@@ -3,34 +3,14 @@ import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 import LocationsList from './locations-list/locations-list';
 import { cities } from '../../const';
-import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PlacesSorting from '../places-sorting/places-sorting';
-import { RootState } from '../../store/reducer';
+import { getFilteredAndSortOffers } from '../../store/app-data/selectors';
+import { getCurrentCity } from '../../store/app-process/selectors';
 
-
-type MainPageProps = {
-};
-
-const mapStateToProps = ({AppProcess, AppData}: RootState) => ({
-  currentCity: AppProcess.currentCity,
-  offers: AppData.offers,
-  currentSort: AppProcess.currentSort,
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux & MainPageProps;
-
-function MainPage({offers, currentCity, currentSort}: ComponentProps): JSX.Element {
-  const filteredOffers = offers.filter((it) => it.city.name === currentCity);
-
-  switch(currentSort) {
-    case 'popular': break;
-    case 'price-asc': filteredOffers.sort((a, b) => a.price - b.price); break;
-    case 'price-desc': filteredOffers.sort((a, b) => b.price - a.price); break;
-    case 'top-rated-first': filteredOffers.sort((a, b) => b.rating - a.rating); break;
-  }
+function MainPage(): JSX.Element {
+  const filteredOffers = useSelector(getFilteredAndSortOffers);
+  const currentCity = useSelector(getCurrentCity);
 
   return (
     <div className="page page--gray page--main">
@@ -61,4 +41,4 @@ function MainPage({offers, currentCity, currentSort}: ComponentProps): JSX.Eleme
   );
 }
 
-export default connector(MainPage);
+export default MainPage;

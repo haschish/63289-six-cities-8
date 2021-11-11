@@ -1,5 +1,4 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../header/header';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
@@ -9,40 +8,27 @@ import PropertyGallery from './property-gallery/property-gallery';
 import InsideList from './inside-list/inside-list';
 import { useParams } from 'react-router';
 import { fetchOfferAction } from '../../store/api-action';
-import { ThunkAppDispatch } from '../../types/action';
 import { useEffect } from 'react';
-import { AuthStatus, OfferStatus, ResourceStatus } from '../../const';
+import { AuthStatus, ResourceStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFound from '../not-found/not-found';
-import { RootState } from '../../store/reducer';
+import { getNearbyOffers, getOffer, getOfferStatus, getReviews } from '../../store/app-data/selectors';
+import { getAuthStatus } from '../../store/user-data/selectors';
 
-type PropertyPageProps = {
-}
-const mapStateToProps = ({AppData, UserData}: RootState) => ({
-  offer: AppData.offer,
-  offerStatus: AppData.offerStatus,
-  reviews: AppData.reviews,
-  nearbyOffers: AppData.nearbyOffers,
-  authStatus: UserData.authStatus,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  loadOffer(id: number) {
-    dispatch(fetchOfferAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux & PropertyPageProps;
-
-function PropertyPage(props: ComponentProps): JSX.Element {
-  const {reviews, offer, offerStatus, loadOffer, nearbyOffers, authStatus} = props;
+function PropertyPage(): JSX.Element {
 
   const {id} = useParams<{id: string}>();
 
+  const reviews = useSelector(getReviews);
+  const nearbyOffers = useSelector(getNearbyOffers);
+  const authStatus = useSelector(getAuthStatus);
+  const offer = useSelector(getOffer);
+  const offerStatus = useSelector(getOfferStatus);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    loadOffer(parseInt(id, 10));
+    dispatch(fetchOfferAction(parseInt(id, 10)));
   }, [id]);
 
   if (offerStatus === ResourceStatus.Loading || offerStatus === ResourceStatus.Unknown) {
@@ -139,4 +125,4 @@ function PropertyPage(props: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(PropertyPage);
+export default PropertyPage;

@@ -5,28 +5,19 @@ import LoginPage from '../login-page/login-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
-import { AppRoute } from '../../const';
+import { AppRoute, ResourceStatus } from '../../const';
 import { Review } from '../../types/review';
 import { State } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect, ConnectedProps, useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
+import { getOffers, getOffersStatus } from '../../store/app-data/selectors';
 
-type AppProps = {
-  reviews: Review[],
-}
+function App(): JSX.Element {
 
-const mapStateToProps = ({loadingOffers, offers}: State) => ({
-  loadingOffers,
-  offers,
-});
-
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux & AppProps;
-
-function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
-  if (loadingOffers) {
+  const offersStatus = useSelector(getOffersStatus);
+  const offers = useSelector(getOffers);
+  if (offersStatus === ResourceStatus.Loading || offersStatus === ResourceStatus.Unknown) {
     return <LoadingScreen />;
   }
 
@@ -53,4 +44,4 @@ function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(App);
+export default App;
