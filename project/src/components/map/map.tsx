@@ -8,6 +8,7 @@ import { Hotel } from '../../types/hotel';
 import { URL_PIN_ACTIVE, URL_PIN_DEFAULT } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '../../store/reducer';
 
 const defaultIcon = leaflet.icon({
   iconUrl: URL_PIN_DEFAULT,
@@ -26,8 +27,8 @@ type MapProps = {
   className?: string,
 }
 
-const mapStateToProps = ({hoveredHotel}: State) => ({
-  hoveredHotel,
+const mapStateToProps = ({AppProcess}: RootState) => ({
+  hoveredHotel: AppProcess.hoveredHotel,
 });
 
 const connector = connect(mapStateToProps);

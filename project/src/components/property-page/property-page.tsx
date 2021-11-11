@@ -11,18 +11,19 @@ import { useParams } from 'react-router';
 import { fetchOfferAction } from '../../store/api-action';
 import { ThunkAppDispatch } from '../../types/action';
 import { useEffect } from 'react';
-import { AuthStatus, OfferStatus } from '../../const';
+import { AuthStatus, OfferStatus, ResourceStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFound from '../not-found/not-found';
+import { RootState } from '../../store/reducer';
 
 type PropertyPageProps = {
 }
-const mapStateToProps = ({offer, offerStatus, reviews, nearbyOffers, authStatus}: State) => ({
-  offer,
-  offerStatus,
-  reviews,
-  nearbyOffers,
-  authStatus,
+const mapStateToProps = ({AppData, UserData}: RootState) => ({
+  offer: AppData.offer,
+  offerStatus: AppData.offerStatus,
+  reviews: AppData.reviews,
+  nearbyOffers: AppData.nearbyOffers,
+  authStatus: UserData.authStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -44,11 +45,11 @@ function PropertyPage(props: ComponentProps): JSX.Element {
     loadOffer(parseInt(id, 10));
   }, [id]);
 
-  if (offerStatus === OfferStatus.Loading || offerStatus === OfferStatus.Unknown) {
+  if (offerStatus === ResourceStatus.Loading || offerStatus === ResourceStatus.Unknown) {
     return <LoadingScreen />;
   }
 
-  if (offerStatus === OfferStatus.NotFound || offerStatus === OfferStatus.Error) {
+  if (offerStatus === ResourceStatus.NotFound || offerStatus === ResourceStatus.Error) {
     return <NotFound />;
   }
 

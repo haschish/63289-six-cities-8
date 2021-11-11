@@ -20,9 +20,10 @@ export const hoverHotel = (hotel?: Hotel) => ({
   payload: hotel,
 } as const);
 
-export const loadOffers = (offers: Hotel[]) => ({
+export const loadOffers = (status: ResourceStatus, offers: Hotel[] = []) => ({
   type: ActionType.LoadOffers,
-  payload: offers,
+  status,
+  offers,
 } as const);
 
 export const requireAuthorization = (status: AuthStatus, authInfo?: AuthInfo) => ({
@@ -47,7 +48,7 @@ export const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
-export const loadOffer = (status: OfferStatus, offer?: Hotel) => ({
+export const loadOffer = (status: ResourceStatus, offer?: Hotel) => ({
   type: ActionType.LoadOffer,
   payload: {
     status,

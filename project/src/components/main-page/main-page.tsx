@@ -6,15 +6,16 @@ import { cities } from '../../const';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import PlacesSorting from '../places-sorting/places-sorting';
+import { RootState } from '../../store/reducer';
 
 
 type MainPageProps = {
 };
 
-const mapStateToProps = ({currentCity, offers, currentSort}: State) => ({
-  currentCity,
-  offers,
-  currentSort,
+const mapStateToProps = ({AppProcess, AppData}: RootState) => ({
+  currentCity: AppProcess.currentCity,
+  offers: AppData.offers,
+  currentSort: AppProcess.currentSort,
 });
 
 const connector = connect(mapStateToProps);

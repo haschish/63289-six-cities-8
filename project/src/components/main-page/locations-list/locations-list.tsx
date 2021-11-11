@@ -1,6 +1,7 @@
 import { Dispatch } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { changeCity } from '../../../store/action';
+import { RootState } from '../../../store/reducer';
 import { Actions } from '../../../types/action';
 import { State } from '../../../types/state';
 import LocationsItem from './locations-item';
@@ -9,8 +10,8 @@ type LocationsListProps = {
   locations: string[],
 }
 
-const mapStateToProps = ({currentCity}: State) => ({
-  currentCity,
+const mapStateToProps = ({AppProcess}: RootState) => ({
+  currentCity: AppProcess.currentCity,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

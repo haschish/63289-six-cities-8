@@ -12,7 +12,7 @@ export const fetchOffersAction = (): ThunkActionResult =>
   async(dispatch, _getState, api): Promise<void> => {
 
     const {data} = await api.get<HotelFromServer[]>(APIRoute.Offers);
-    dispatch(loadOffers(data.map((it) => convertHotelToClient(it))));
+    dispatch(loadOffers(ResourceStatus.Loaded, data.map((it) => convertHotelToClient(it))));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
@@ -40,16 +40,16 @@ export const logoutAction = (): ThunkActionResult =>
 export const fetchOfferAction = (id: number): ThunkActionResult =>
   async(dispatch, _getState, api) => {
     try {
-      dispatch(loadOffer(OfferStatus.Loading));
+      dispatch(loadOffer(ResourceStatus.Loading));
       const {data} = await api.get<HotelFromServer>(`/hotels/${id}`);
-      dispatch(loadOffer(OfferStatus.Loaded, convertHotelToClient(data)));
+      dispatch(loadOffer(ResourceStatus.Loaded, convertHotelToClient(data)));
       dispatch(fetchReviewsAction(id));
       dispatch(fetchNearbyAction(id));
     } catch (e) {
       if (axios.isAxiosError(e) && e.response?.status === 404) {
-        dispatch(loadOffer(OfferStatus.NotFound));
+        dispatch(loadOffer(ResourceStatus.NotFound));
       }
-      dispatch(loadOffer(OfferStatus.Error));
+      dispatch(loadOffer(ResourceStatus.Error));
     }
   };
 

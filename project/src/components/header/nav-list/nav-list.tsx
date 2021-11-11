@@ -1,13 +1,14 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { AuthStatus } from '../../../const';
+import { RootState } from '../../../store/reducer';
 import { State } from '../../../types/state';
 import SignIn from './sign-in';
 import SignOut from './sign-out';
 import UserItem from './user-item';
 
-const mapStateToProps = ({authStatus, authInfo}: State) => ({
-  authStatus,
-  authInfo,
+const mapStateToProps = ({UserData}: RootState) => ({
+  authStatus: UserData.authStatus,
+  authInfo: UserData.authInfo,
 });
 
 const connector = connect(mapStateToProps);
