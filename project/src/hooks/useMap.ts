@@ -2,7 +2,7 @@ import {RefObject, useEffect, useState} from 'react';
 import leaflet from 'leaflet';
 import { City } from '../types/city';
 
-type LeafletMap = leaflet.Map & {markers?: leaflet.LayerGroup} | null;
+type LeafletMap = leaflet.Map | null;
 
 function useMap(mapRef: RefObject<HTMLDivElement>, city: City): LeafletMap {
   const [map, setMap] = useState<LeafletMap>(null);
@@ -17,8 +17,6 @@ function useMap(mapRef: RefObject<HTMLDivElement>, city: City): LeafletMap {
         zoom: city.location.zoom,
       });
 
-      instance.markers = leaflet.layerGroup().addTo(instance);
-
       leaflet
         .tileLayer(
           'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -30,7 +28,16 @@ function useMap(mapRef: RefObject<HTMLDivElement>, city: City): LeafletMap {
 
       setMap(instance);
     }
-  }, [mapRef, map, city]);
+  }, [mapRef, map]);
+
+  useEffect(() => {
+    if (map) {
+      map.setView({
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      }, city.location.zoom);
+    }
+  }, [map, city]);
 
   return map;
 }

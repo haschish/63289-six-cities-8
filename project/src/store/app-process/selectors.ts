@@ -1,4 +1,4 @@
-import { NameSpace, RootState } from "../reducer";
+import { NameSpace, RootState } from '../reducer';
 
 export const getCurrentCity = (state: RootState) => state[NameSpace.AppProcess].currentCity;
 

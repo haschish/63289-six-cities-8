@@ -1,8 +1,9 @@
-import { Actions, ActionType } from "../../types/action";
-import { AppProcessState } from "../../types/state";
+import { cities } from '../../const';
+import { Actions, ActionType } from '../../types/action';
+import { AppProcessState } from '../../types/state';
 
 const initialState: AppProcessState = {
-  currentCity: 'Paris',
+  currentCity: cities[0],
   currentSort: 'popular',
   hoveredHotel: undefined,
 };

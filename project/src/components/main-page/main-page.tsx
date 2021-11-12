@@ -1,15 +1,15 @@
-import Map from '../map/map';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 import LocationsList from './locations-list/locations-list';
 import { cities } from '../../const';
 import { useSelector } from 'react-redux';
 import PlacesSorting from '../places-sorting/places-sorting';
-import { getFilteredAndSortOffers } from '../../store/app-data/selectors';
+import { getPreparedOffers } from '../../store/app-data/selectors';
 import { getCurrentCity } from '../../store/app-process/selectors';
+import MapComponent from '../map-component/map-component';
 
 function MainPage(): JSX.Element {
-  const filteredOffers = useSelector(getFilteredAndSortOffers);
+  const filteredOffers = useSelector(getPreparedOffers);
   const currentCity = useSelector(getCurrentCity);
 
   return (
@@ -32,7 +32,7 @@ function MainPage(): JSX.Element {
               <PlacesList offers={filteredOffers} className="cities__places-list" classNameCard="cities__place-card" />
             </section>
             <div className="cities__right-section">
-              <Map offers={filteredOffers} className="cities__map"/>
+              <MapComponent offers={filteredOffers} className="cities__map"/>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIRoute, AppRoute, AuthStatus, OfferStatus, ResourceStatus } from '../const';
+import { APIRoute, AppRoute, AuthStatus, ResourceStatus } from '../const';
 import { AuthInfoFromServer, convertAuthInfoToClient, convertHotelToClient, convertReviewToClient, HotelFromServer } from '../server/adapter';
 import { dropToken, saveToken } from '../server/token';
 import { ThunkActionResult } from '../types/action';

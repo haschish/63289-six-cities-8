@@ -1,6 +1,6 @@
-import { ResourceStatus } from "../../const";
-import { Actions, ActionType } from "../../types/action";
-import { AppDataState } from "../../types/state";
+import { ResourceStatus } from '../../const';
+import { Actions, ActionType } from '../../types/action';
+import { AppDataState } from '../../types/state';
 
 const initialState: AppDataState = {
   offers: [],

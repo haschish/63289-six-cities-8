@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../header/header';
-import Map from '../map/map';
+import MapComponent from '../map-component/map-component';
 import PlacesList from '../places-list/places-list';
 import CommentForm from './comment-form/comment-form';
 import ReviewsList from './reviews-list/reviews-list';
@@ -14,6 +14,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import NotFound from '../not-found/not-found';
 import { getNearbyOffers, getOffer, getOfferStatus, getReviews } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-data/selectors';
+
 
 function PropertyPage(): JSX.Element {
 
@@ -112,7 +113,7 @@ function PropertyPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offers={nearbyOffers} className="property__map" />
+          <MapComponent offers={nearbyOffers} className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">

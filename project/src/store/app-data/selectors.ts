@@ -1,17 +1,19 @@
-import { getCurrentCity, getCurrentSort } from "../app-process/selectors";
-import { NameSpace, RootState } from "../reducer";
+import { createSelector } from 'reselect';
+import { getCurrentCity, getCurrentSort } from '../app-process/selectors';
+import { NameSpace, RootState } from '../reducer';
 
 export const getOffers = (state: RootState) => state[NameSpace.AppData].offers;
 
 export const getOffersStatus = (state: RootState) => state[NameSpace.AppData].offersStatus;
 
-export const getOffersByCurrentCity = (state: RootState) => {
-  const currentCity = getCurrentCity(state);
-  return getOffers(state).filter((it) => it.city.name === currentCity);
-}
+const getFilteredOffersByCity = createSelector(
+  getOffers,
+  getCurrentCity,
+  (offers, currentCity) => offers.filter((it) => it.city.name === currentCity.name),
+);
 
-export const getFilteredAndSortOffers = (state: RootState) => {
-  const filteredOffers = getOffersByCurrentCity(state);
+export const getPreparedOffers = (state: RootState) => {
+  const filteredOffers = getFilteredOffersByCity(state);
   const currentSort = getCurrentSort(state);
 
   switch(currentSort) {
@@ -20,7 +22,8 @@ export const getFilteredAndSortOffers = (state: RootState) => {
     case 'price-desc': return filteredOffers.sort((a, b) => b.price - a.price);
     case 'top-rated-first': return filteredOffers.sort((a, b) => b.rating - a.rating);
   }
-}
+};
+
 export const getOffer = (state: RootState) => state[NameSpace.AppData].offer;
 
 export const getOfferStatus = (state: RootState) => state[NameSpace.AppData].offerStatus;

@@ -1,4 +1,5 @@
 import { AuthStatus, OfferStatus, ResourceStatus } from '../const';
+import { City } from './city';
 import { Hotel } from './hotel';
 import { Review } from './review';
 import { Sort } from './sort';
@@ -18,7 +19,7 @@ export type AppDataState = {
 }
 
 export type AppProcessState = {
-  currentCity: string,
+  currentCity: City,
   currentSort: Sort,
   hoveredHotel?: Hotel,
 }

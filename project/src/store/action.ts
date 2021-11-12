@@ -1,11 +1,12 @@
-import { AppRoute, AuthStatus, OfferStatus, ResourceStatus } from '../const';
+import { AppRoute, AuthStatus, ResourceStatus } from '../const';
 import { ActionType } from '../types/action';
+import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
 import { Review } from '../types/review';
 import { Sort } from '../types/sort';
 import { AuthInfo } from '../types/user';
 
-export const changeCity = (city: string) => ({
+export const changeCity = (city: City) => ({
   type: ActionType.ChangeCity,
   payload: city,
 } as const);

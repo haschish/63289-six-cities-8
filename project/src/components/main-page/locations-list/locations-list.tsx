@@ -1,14 +1,11 @@
-import { Dispatch } from 'react';
-import { connect, ConnectedProps, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeCity } from '../../../store/action';
 import { getCurrentCity } from '../../../store/app-process/selectors';
-import { RootState } from '../../../store/reducer';
-import { Actions } from '../../../types/action';
-import { State } from '../../../types/state';
+import { City } from '../../../types/city';
 import LocationsItem from './locations-item';
 
 type LocationsListProps = {
-  locations: string[],
+  locations: City[],
 }
 
 function LocationsList({locations}: LocationsListProps): JSX.Element {
@@ -18,7 +15,7 @@ function LocationsList({locations}: LocationsListProps): JSX.Element {
 
   return (
     <ul className="locations__list tabs__list">
-      {locations.map((it) => <LocationsItem key={`locations-item-${it}`} name={it} isActive={it === currentCity} onClick={() => dispatch(changeCity(it))}/>)}
+      {locations.map((it) => <LocationsItem key={`locations-item-${it.name}`} name={it.name} isActive={it === currentCity} onClick={() => dispatch(changeCity(it))}/>)}
     </ul>
   );
 }
