@@ -1,5 +1,6 @@
 import { Hotel } from '../types/hotel';
-import { AuthInfo, User } from '../types/user';
+import { Review, ReviewFromServer } from '../types/review';
+import { AuthInfo, User, UserFromServer } from '../types/user';
 
 export type HotelFromServer = Omit<Hotel, 'maxAdults' | 'isFavorite' | 'isPremium' | 'previewImage' | 'host'> & {
   'is_favorite': boolean,
@@ -22,11 +23,6 @@ export const convertHotelToClient = ({is_favorite, is_premium, max_adults, previ
 );
 /* eslint-enable camelcase */
 
-export type UserFromServer = Omit<User, 'isPro' | 'avatar'> & {
-  'is_pro': boolean,
-  'avatar_url': string,
-};
-
 export const convertUserToClient = (data: UserFromServer): User => ({
   avatar: data.avatar_url,
   id: data.id,
@@ -43,3 +39,7 @@ export const convertAuthInfoToClient = ({email, token, ...res}: AuthInfoFromServ
   email,
   token,
 }, convertUserToClient(res));
+
+export const convertReviewToClient = ({user, ...res}: ReviewFromServer): Review => Object.assign({
+  user: convertUserToClient(user),
+}, res);

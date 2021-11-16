@@ -1,5 +1,6 @@
-import { AuthStatus } from '../const';
+import { AuthStatus, OfferStatus, ResourceStatus } from '../const';
 import { Hotel } from './hotel';
+import { Review } from './review';
 import { Sort } from './sort';
 import { AuthInfo } from './user';
 
@@ -11,4 +12,11 @@ export type State = {
   hoveredHotel?: Hotel,
   authStatus: AuthStatus,
   authInfo?: AuthInfo,
+  offer?: Hotel,
+  offerStatus: OfferStatus,
+  reviews: Review[],
+  reviewsStatus: ResourceStatus,
+  nearbyOffers: Hotel[],
+  nearbyOffersStatus: ResourceStatus,
+  reviewStatus: ResourceStatus,
 }
