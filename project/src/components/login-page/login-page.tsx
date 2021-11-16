@@ -1,27 +1,17 @@
 import { FormEvent, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginAction } from '../../store/api-action';
-import { ThunkAppDispatch } from '../../types/action';
 import Header from '../header/header';
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(email: string, password: string) {
-    dispatch(loginAction({email, password}));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux;
-
-function LoginPage({onSubmit}: ComponentProps): JSX.Element {
+function LoginPage(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    onSubmit(email, password);
+    dispatch(loginAction({email, password}));
   };
 
   return (
@@ -61,4 +51,4 @@ function LoginPage({onSubmit}: ComponentProps): JSX.Element {
   );
 }
 
-export default connector(LoginPage);
+export default LoginPage;

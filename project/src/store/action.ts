@@ -1,11 +1,12 @@
-import { AppRoute, AuthStatus, OfferStatus, ResourceStatus } from '../const';
+import { AppRoute, AuthStatus, ResourceStatus } from '../const';
 import { ActionType } from '../types/action';
+import { City } from '../types/city';
 import { Hotel } from '../types/hotel';
 import { Review } from '../types/review';
 import { Sort } from '../types/sort';
 import { AuthInfo } from '../types/user';
 
-export const changeCity = (city: string) => ({
+export const changeCity = (city: City) => ({
   type: ActionType.ChangeCity,
   payload: city,
 } as const);
@@ -20,9 +21,10 @@ export const hoverHotel = (hotel?: Hotel) => ({
   payload: hotel,
 } as const);
 
-export const loadOffers = (offers: Hotel[]) => ({
+export const loadOffers = (status: ResourceStatus, offers: Hotel[] = []) => ({
   type: ActionType.LoadOffers,
-  payload: offers,
+  status,
+  offers,
 } as const);
 
 export const requireAuthorization = (status: AuthStatus, authInfo?: AuthInfo) => ({
@@ -47,7 +49,7 @@ export const requireLogout = () => ({
   type: ActionType.RequireLogout,
 } as const);
 
-export const loadOffer = (status: OfferStatus, offer?: Hotel) => ({
+export const loadOffer = (status: ResourceStatus, offer?: Hotel) => ({
   type: ActionType.LoadOffer,
   payload: {
     status,
@@ -74,4 +76,20 @@ export const loadNearbyOffers = (status: ResourceStatus, offers: Hotel[] = []) =
 export const sendReview = (status: ResourceStatus) => ({
   type: ActionType.SendReview,
   payload: status,
+} as const);
+
+export const updateOffer = (offer: Hotel) => ({
+  type: ActionType.UpdateOffer,
+  payload: offer,
+} as const);
+
+export const loadFavorites = (status: ResourceStatus, offers: Hotel[] = []) => ({
+  type: ActionType.LoadFavorites,
+  status,
+  offers,
+} as const);
+
+export const deleteFavorite = (offer: Hotel) => ({
+  type: ActionType.DeleteFavorite,
+  offer,
 } as const);

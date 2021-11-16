@@ -1,36 +1,24 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ResourceStatus } from '../../../const';
 import { addReviewAction } from '../../../store/api-action';
-import { ThunkAppDispatch } from '../../../types/action';
-import { State } from '../../../types/state';
+import { getReviewStatus } from '../../../store/app-data/selectors';
 import RatingInput from './rating-input';
 
 type CommentFormType = {
   hotelId: number,
 };
 
-const mapStateToProps = ({reviewStatus}: State) => ({
-  reviewStatus,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  sendReview(hotelId: number, comment: string, rating: number) {
-    dispatch(addReviewAction(hotelId, comment, rating));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = PropsFromRedux & CommentFormType;
-
-function CommentForm({sendReview, hotelId, reviewStatus}: ComponentProps): JSX.Element {
+function CommentForm({hotelId}: CommentFormType): JSX.Element {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
+  const reviewStatus = useSelector(getReviewStatus);
+  const dispatch = useDispatch();
+
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    sendReview(hotelId, review, rating);
+    dispatch(addReviewAction(hotelId, review, rating));
   };
 
   useEffect(() => {
@@ -64,4 +52,4 @@ function CommentForm({sendReview, hotelId, reviewStatus}: ComponentProps): JSX.E
   );
 }
 
-export default connector(CommentForm);
+export default CommentForm;

@@ -1,30 +1,39 @@
-import { Hotel } from '../../types/hotel';
-import FavoritesEmpty from '../favorites-empty/favorites-empty';
-import FavoritesList from '../favorites-list/favorites-list';
+import classNames from 'classnames';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ResourceStatus } from '../../const';
+import { loadFavoriteOffersAction } from '../../store/api-action';
+import { getFavoriteOffers, getFavoriteOffersStatus } from '../../store/app-data/selectors';
+import FavoritesEmpty from './favorites-empty';
+import FavoritesList from './favorites-list/favorites-list';
 import Footer from '../footer/footer';
 import Header from '../header/header';
+import FavoritesLoading from './favorites-loading';
 
-type FavoritesPageProps = {
-  offers: Hotel[],
-}
+function FavoritesPage(): JSX.Element {
+  const offers = useSelector(getFavoriteOffers);
+  const offersStatus = useSelector(getFavoriteOffersStatus);
+  const dispatch = useDispatch();
+  const [isFirst, setIsFirst] = useState(true);
 
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
-  const filtered = offers.filter((it) => it.isFavorite);
-  const mainClass = filtered.length === 0 ? 'page__main--favorites-empty' : '';
-  const pageClass = filtered.length === 0 ? 'page--favorites-empty' : '';
+  useEffect(() => {
+    if (isFirst) {
+      dispatch(loadFavoriteOffersAction());
+      setIsFirst(false);
+    }
+  });
+
+  const isEmpty = offers.length === 0;
 
   return (
-    <div className={`page ${pageClass}`}>
+    <div className={classNames('page', {'page--favorites-empty': isEmpty})}>
       <Header />
 
-      <main className={`page__main page__main--favorites ${mainClass}`}>
+      <main className={classNames('page__main page__main--favorites', {'page__main--favorites-empty': isEmpty})}>
         <div className="page__favorites-container container">
-          {
-            (filtered.length === 0) ?
-              <FavoritesEmpty /> :
-              <FavoritesList offers={filtered}/>
-          }
-
+          {offersStatus === ResourceStatus.Loading && <FavoritesLoading />}
+          {offersStatus === ResourceStatus.Loaded && offers.length === 0 && <FavoritesEmpty />}
+          {offersStatus === ResourceStatus.Loaded && offers.length !== 0 && <FavoritesList offers={offers}/>}
         </div>
       </main>
       <Footer />

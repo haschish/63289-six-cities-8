@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import App from './components/app/app';
-import { reviews } from './mocks/reviews';
 import reducer from './store/reducer';
 import thunk from 'redux-thunk';
 import { createAPI } from './server/api';
@@ -29,7 +28,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App reviews={reviews}/>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
