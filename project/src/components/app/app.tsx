@@ -1,15 +1,16 @@
 import MainPage from '../main-page/main-page';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import { Switch, Route, Router } from 'react-router-dom';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoginPage from '../login-page/login-page';
 import FavoritesPage from '../favorites-page/favorites-page';
 import PropertyPage from '../property-page/property-page';
 import PrivateRoute from '../private-route/private-route';
-import { AppRoute, AuthStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Review } from '../../types/review';
 import { State } from '../../types/state';
 import { connect, ConnectedProps } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   reviews: Review[],
@@ -30,7 +31,7 @@ function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <MainPage />
@@ -38,7 +39,7 @@ function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
         <Route path={AppRoute.SignIn} exact>
           <LoginPage />
         </Route>
-        <PrivateRoute path={AppRoute.Favorites} exact authStatus={AuthStatus.Authorized} redirect={AppRoute.SignIn}>
+        <PrivateRoute path={AppRoute.Favorites} exact redirect={AppRoute.SignIn}>
           <FavoritesPage offers={offers}/>
         </PrivateRoute>
         <Route path={AppRoute.Room}
@@ -50,7 +51,7 @@ function App({offers, reviews, loadingOffers}: ComponentProps): JSX.Element {
           <NotFoundPage />
         </Route>
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 
