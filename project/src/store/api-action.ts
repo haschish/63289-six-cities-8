@@ -5,7 +5,8 @@ import { dropToken, saveToken } from '../server/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { ReviewFromServer } from '../types/review';
-import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, redirectToRoute, requireAuthorization, requireLogout, sendReview } from './action';
+import { deleteFavorite, loadFavorites, loadNearbyOffers, loadOffer, loadOffers, loadReviews, redirectToRoute, requireAuthorization, requireLogout, sendReview, updateOffer } from './action';
+import { getAuthStatus } from './user-data/selectors';
 
 
 export const fetchOffersAction = (): ThunkActionResult =>
@@ -85,5 +86,34 @@ export const addReviewAction = (id: number, comment: string, rating: number): Th
       dispatch(loadReviews(ResourceStatus.Loaded, data.map((it) => convertReviewToClient(it))));
     } catch (e) {
       dispatch(sendReview(ResourceStatus.Error));
+    }
+  };
+
+export const toggleFavorite = (hotelId: number, status: boolean): ThunkActionResult =>
+  async(dispatch, getState, api) => {
+    if (getAuthStatus(getState()) !== AuthStatus.Authorized) {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+      return;
+    }
+    try {
+      const {data} = await api.post<HotelFromServer>(`/favorite/${hotelId}/${Number(status)}`);
+      const offer = convertHotelToClient(data);
+      dispatch(updateOffer(offer));
+      if (!offer.isFavorite) {
+        dispatch(deleteFavorite(offer));
+      }
+    } catch(e) {
+      // dispatch(()=>{});
+    }
+  };
+
+export const loadFavoriteOffersAction = (): ThunkActionResult =>
+  async(dispatch, _getState, api) => {
+    try {
+      dispatch(loadFavorites(ResourceStatus.Loading));
+      const {data} = await api.get<HotelFromServer[]>('/favorite');
+      dispatch(loadFavorites(ResourceStatus.Loaded, data.map((it) => convertHotelToClient(it))));
+    } catch (e) {
+      dispatch(loadFavorites(ResourceStatus.Error));
     }
   };

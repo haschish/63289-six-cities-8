@@ -1,4 +1,5 @@
-import { AuthStatus, OfferStatus, ResourceStatus } from '../const';
+import { AuthStatus, ResourceStatus } from '../const';
+import { RootState } from '../store/reducer';
 import { City } from './city';
 import { Hotel } from './hotel';
 import { Review } from './review';
@@ -16,6 +17,8 @@ export type AppDataState = {
   nearbyOffers: Hotel[],
   nearbyOffersStatus: ResourceStatus,
   reviewStatus: ResourceStatus,
+  favoriteOffers: Hotel[],
+  favoriteOffersStatus: ResourceStatus,
 }
 
 export type AppProcessState = {
@@ -29,19 +32,4 @@ export type UserProcessState = {
   authInfo?: AuthInfo,
 }
 
-export type State = {
-  currentCity: string,
-  offers: Hotel[],
-  loadingOffers: boolean,
-  currentSort: Sort,
-  hoveredHotel?: Hotel,
-  authStatus: AuthStatus,
-  authInfo?: AuthInfo,
-  offer?: Hotel,
-  offerStatus: OfferStatus,
-  reviews: Review[],
-  reviewsStatus: ResourceStatus,
-  nearbyOffers: Hotel[],
-  nearbyOffersStatus: ResourceStatus,
-  reviewStatus: ResourceStatus,
-}
+export type State = RootState;

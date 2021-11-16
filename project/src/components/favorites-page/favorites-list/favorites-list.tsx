@@ -1,4 +1,5 @@
-import { Hotel } from '../../types/hotel';
+
+import { Hotel } from '../../../types/hotel';
 import FavoriteItem from './favorite-item';
 
 type FavoritesListProps = {

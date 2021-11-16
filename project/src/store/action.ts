@@ -77,3 +77,19 @@ export const sendReview = (status: ResourceStatus) => ({
   type: ActionType.SendReview,
   payload: status,
 } as const);
+
+export const updateOffer = (offer: Hotel) => ({
+  type: ActionType.UpdateOffer,
+  payload: offer,
+} as const);
+
+export const loadFavorites = (status: ResourceStatus, offers: Hotel[] = []) => ({
+  type: ActionType.LoadFavorites,
+  status,
+  offers,
+} as const);
+
+export const deleteFavorite = (offer: Hotel) => ({
+  type: ActionType.DeleteFavorite,
+  offer,
+} as const);

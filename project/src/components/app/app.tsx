@@ -9,12 +9,11 @@ import { AppRoute, ResourceStatus } from '../../const';
 import { useSelector } from 'react-redux';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
-import { getOffers, getOffersStatus } from '../../store/app-data/selectors';
+import { getOffersStatus } from '../../store/app-data/selectors';
 
 function App(): JSX.Element {
 
   const offersStatus = useSelector(getOffersStatus);
-  const offers = useSelector(getOffers);
   if (offersStatus === ResourceStatus.Loading || offersStatus === ResourceStatus.Unknown) {
     return <LoadingScreen />;
   }
@@ -29,7 +28,7 @@ function App(): JSX.Element {
           <LoginPage />
         </Route>
         <PrivateRoute path={AppRoute.Favorites} exact redirect={AppRoute.SignIn}>
-          <FavoritesPage offers={offers}/>
+          <FavoritesPage />
         </PrivateRoute>
         <Route path={AppRoute.Room}>
           <PropertyPage />

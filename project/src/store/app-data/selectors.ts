@@ -33,3 +33,7 @@ export const getReviews = (state: RootState) => state[NameSpace.AppData].reviews
 export const getNearbyOffers = (state: RootState) => state[NameSpace.AppData].nearbyOffers;
 
 export const getReviewStatus = (state: RootState) => state[NameSpace.AppData].reviewStatus;
+
+export const getFavoriteOffers = (state: RootState) => state[NameSpace.AppData].favoriteOffers;
+
+export const getFavoriteOffersStatus = (state: RootState) => state[NameSpace.AppData].favoriteOffersStatus;

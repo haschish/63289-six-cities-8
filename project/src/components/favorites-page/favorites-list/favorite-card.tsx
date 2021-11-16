@@ -1,13 +1,21 @@
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { Hotel } from '../../types/hotel';
-import Rating from '../place-card/rating';
+import { AppRoute } from '../../../const';
+import { toggleFavorite } from '../../../store/api-action';
+import { Hotel } from '../../../types/hotel';
+import Rating from '../../place-card/rating';
 
 type FavoriteCardProps = {
   offer: Hotel,
 }
 
 function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
+  const dispatch = useDispatch();
+
+  const onClickBookmarkButton = () => {
+    dispatch(toggleFavorite(offer.id, !offer.isFavorite));
+  };
+
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -21,7 +29,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button" onClick={onClickBookmarkButton}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
