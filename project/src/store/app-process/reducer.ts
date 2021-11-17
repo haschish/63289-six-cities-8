@@ -1,6 +1,7 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { cities } from '../../const';
-import { Actions, ActionType } from '../../types/action';
 import { AppProcessState } from '../../types/state';
+import { changeCity, changeSort, hoverHotel } from './action';
 
 const initialState: AppProcessState = {
   currentCity: cities[0],
@@ -8,13 +9,17 @@ const initialState: AppProcessState = {
   hoveredHotel: undefined,
 };
 
-const appProcessReducer = (state: AppProcessState = initialState, action: Actions): AppProcessState => {
-  switch(action.type) {
-    case ActionType.ChangeCity: return {...state, currentCity: action.payload};
-    case ActionType.ChangeSort: return {...state, currentSort: action.payload};
-    case ActionType.HoverHotel: return {...state, hoveredHotel: action.payload};
-    default: return state;
-  }
-};
+const appProcessReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.currentCity = action.payload;
+    })
+    .addCase(changeSort, (state, action) => {
+      state.currentSort = action.payload;
+    })
+    .addCase(hoverHotel, (state, action) => {
+      state.hoveredHotel = action.payload;
+    });
+});
 
 export default appProcessReducer;

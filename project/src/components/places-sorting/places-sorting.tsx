@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sortMap } from '../../const';
-import { changeSort } from '../../store/action';
+import { changeSort } from '../../store/app-process/action';
 import { getCurrentSort } from '../../store/app-process/selectors';
 
 function PlacesSorting(): JSX.Element {

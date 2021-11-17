@@ -1,6 +1,8 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { ResourceStatus } from '../../const';
-import { Actions, ActionType } from '../../types/action';
 import { AppDataState } from '../../types/state';
+import { deleteFavorite, loadFavorites, sendReview } from './action';
+import { loadNearbyOffers, loadOffer, loadOffers, loadReviews, updateOffer } from './action';
 
 const initialState: AppDataState = {
   offers: [],
@@ -17,25 +19,40 @@ const initialState: AppDataState = {
   favoriteOffersStatus: ResourceStatus.Unknown,
 };
 
-const appDataReducer = (state: AppDataState = initialState, action: Actions): AppDataState => {
-  switch(action.type) {
-    case ActionType.LoadOffers: return {...state, offersStatus: action.status, offers: action.offers};
-    case ActionType.LoadOffer: return {...state, offerStatus: action.payload.status, offer: action.payload.offer};
-    case ActionType.UpdateOffer: {
+const appDataReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loadOffers, (state, action) => {
+      state.offersStatus = action.payload.status;
+      state.offers = action.payload.offers;
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.offer = action.payload.offer;
+      state.offerStatus = action.payload.status;
+    })
+    .addCase(updateOffer, (state, action) => {
       const index = state.offers.findIndex((it) => it.id === action.payload.id);
-      const offers = (index !== -1) ? [...state.offers.slice(0, index), action.payload, ...state.offers.slice(index + 1)] : state.offers;
-      return {...state, offers};
-    }
-    case ActionType.LoadReviews: return {...state, reviewsStatus: action.payload.status, reviews: action.payload.reviews};
-    case ActionType.LoadNearbyOffers: return {...state, nearbyOffersStatus: action.payload.status, nearbyOffers: action.payload.offers};
-    case ActionType.SendReview: return {...state, reviewStatus: action.payload};
-    case ActionType.LoadFavorites: return {...state, favoriteOffersStatus: action.status, favoriteOffers: action.offers};
-    case ActionType.DeleteFavorite: {
-      const favoriteOffers = state.favoriteOffers.filter((it) => it.id !== action.offer.id);
-      return {...state, favoriteOffers};
-    }
-    default: return state;
-  }
-};
+      if (index !== -1) {
+        state.offers[index] = action.payload;
+      }
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviewStatus = action.payload.status;
+      state.reviews = action.payload.reviews;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffersStatus = action.payload.status;
+      state.nearbyOffers = action.payload.offers;
+    })
+    .addCase(sendReview, (state, action) => {
+      state.reviewStatus = action.payload;
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favoriteOffersStatus = action.payload.status;
+      state.favoriteOffers = action.payload.offers;
+    })
+    .addCase(deleteFavorite, (state, action) => {
+      state.favoriteOffers = state.favoriteOffers.filter((it) => it.id !== action.payload.id);
+    });
+});
 
 export default appDataReducer;

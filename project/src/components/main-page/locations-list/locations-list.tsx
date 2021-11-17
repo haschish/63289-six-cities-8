@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCity } from '../../../store/action';
+import { changeCity } from '../../../store/app-process/action';
 import { getCurrentCity } from '../../../store/app-process/selectors';
 import { City } from '../../../types/city';
 import LocationsItem from './locations-item';

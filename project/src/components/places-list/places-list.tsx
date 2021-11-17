@@ -1,7 +1,7 @@
 import PlaceCard from '../place-card/place-card';
 import { Hotel } from '../../types/hotel';
 import classNames from 'classnames';
-import { hoverHotel } from '../../store/action';
+import { hoverHotel } from '../../store/app-process/action';
 import { useDispatch } from 'react-redux';
 
 type PlacesListProps = {

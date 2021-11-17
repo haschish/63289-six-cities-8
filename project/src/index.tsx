@@ -1,26 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
 import App from './components/app/app';
 import reducer from './store/reducer';
-import thunk from 'redux-thunk';
 import { createAPI } from './server/api';
 import { ThunkAppDispatch } from './types/action';
 import { checkAuthAction, fetchOffersAction } from './store/api-action';
-import { requireAuthorization } from './store/action';
+import { requireAuthorization } from './store/user-data/action';
 import { AuthStatus } from './const';
-import {composeWithDevTools} from 'redux-devtools-extension';
 import { redirect } from './store/middlewares/redirect';
+import { configureStore } from '@reduxjs/toolkit';
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthStatus.NoAuthorized)));
-const store = createStore(
+
+const store = configureStore({
   reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
-  ),
-);
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    thunk: {
+      extraArgument: api,
+    },
+  }).concat(redirect),
+});
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchOffersAction());
