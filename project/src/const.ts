@@ -1,6 +1,8 @@
 import { City } from './types/city';
 import { Sort } from './types/sort';
 
+export const MAX_REVIEWS = 10;
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -11,14 +13,6 @@ export enum AppRoute {
 export enum AuthStatus {
   Authorized = 'authorized',
   NoAuthorized = 'noAuthorized',
-  Unknown = 'unknown',
-}
-
-export enum OfferStatus {
-  Loading = 'loading',
-  Loaded = 'loaded',
-  NotFound = 'notFound',
-  Error = 'error',
   Unknown = 'unknown',
 }
 
@@ -46,6 +40,13 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const typeMap = {
+  apartment: 'Apartment',
+  room: 'Private Room',
+  house: 'House',
+  hotel: 'Hotel',
+};
 
 export const cities: City[] = [
   {

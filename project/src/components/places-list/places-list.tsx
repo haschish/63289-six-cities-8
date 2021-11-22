@@ -8,9 +8,10 @@ type PlacesListProps = {
   offers: Hotel[],
   className?: string,
   classNameCard?: string,
+  isDispatchHover?: boolean,
 }
 
-function PlacesList({offers, className, classNameCard}: PlacesListProps): JSX.Element {
+function PlacesList({offers, className, classNameCard, isDispatchHover = true}: PlacesListProps): JSX.Element {
   const dispatch = useDispatch();
 
   return (
@@ -21,8 +22,8 @@ function PlacesList({offers, className, classNameCard}: PlacesListProps): JSX.El
             className={classNameCard}
             key={`place-card-${it.id}`}
             data={it}
-            onMouseOver={() => dispatch(hoverHotel(it))}
-            onMouseLeave={() => dispatch(hoverHotel(undefined))}
+            onMouseOver={isDispatchHover ? () => dispatch(hoverHotel(it)) : undefined}
+            onMouseLeave={isDispatchHover ? () => dispatch(hoverHotel(undefined)) : undefined}
           />
         ))
       }

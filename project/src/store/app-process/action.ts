@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AppRoute } from '../../const';
 import { ActionType } from '../../types/action';
 import { City } from '../../types/city';
 import { Hotel } from '../../types/hotel';
@@ -22,5 +23,12 @@ export const hoverHotel = createAction(
   ActionType.HoverHotel,
   (hotel?: Hotel) => ({
     payload: hotel,
+  }),
+);
+
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (route: AppRoute) => ({
+    payload: route,
   }),
 );

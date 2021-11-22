@@ -8,11 +8,12 @@ import UserItem from './user-item';
 function NavList(): JSX.Element {
   const authStatus = useSelector(getAuthStatus);
   const authInfo = useSelector(getAuthInfo);
+  const authorized = authStatus === AuthStatus.Authorized;
 
   return (
     <ul className="header__nav-list">
-      {authStatus === AuthStatus.Authorized && <UserItem authInfo={authInfo!}/>}
-      {authStatus === AuthStatus.Authorized ? <SignOut /> : <SignIn />}
+      {authorized && <UserItem authInfo={authInfo!}/>}
+      {authorized ? <SignOut /> : <SignIn />}
     </ul>
   );
 }

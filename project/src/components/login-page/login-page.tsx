@@ -1,13 +1,20 @@
 import { FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRoute, AuthStatus } from '../../const';
 import { loginAction } from '../../store/api-action';
+import { redirectToRoute } from '../../store/app-process/action';
+import { getAuthStatus } from '../../store/user-data/selectors';
 import Header from '../header/header';
 
 function LoginPage(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const authStatus = useSelector(getAuthStatus);
   const dispatch = useDispatch();
+
+  if (authStatus === AuthStatus.Authorized) {
+    dispatch(redirectToRoute(AppRoute.Main));
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

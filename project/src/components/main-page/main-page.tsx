@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { getPreparedOffers } from '../../store/app-data/selectors';
 import { getCurrentCity } from '../../store/app-process/selectors';
 import Places from './places/places';
-import NoPlaces from './no-places/no-places';
 import classNames from 'classnames';
 
 function MainPage(): JSX.Element {
@@ -24,7 +23,7 @@ function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          {filteredOffers.length ? <Places offers={filteredOffers} city={currentCity} /> : <NoPlaces city={currentCity} />}
+          <Places offers={filteredOffers} city={currentCity} />
         </div>
       </main>
     </div>

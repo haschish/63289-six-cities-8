@@ -15,7 +15,6 @@ export enum ActionType {
   UpdateOffer = 'data/updateOffer',
   LoadReviews = 'data/loadReviews',
   LoadNearbyOffers = 'data/loadNearbyOffers',
-  FetchAuthInfo = 'data/fetchAuthInfo',
   SendReview = 'data/sendReview',
   LoadFavorites = 'data/loadFavorites',
   DeleteFavorite = 'data/deleteFavorite',

@@ -7,20 +7,23 @@ import ReviewsList from './reviews-list/reviews-list';
 import PropertyGallery from './property-gallery/property-gallery';
 import InsideList from './inside-list/inside-list';
 import { useParams } from 'react-router';
-import { fetchOfferAction } from '../../store/api-action';
+import { fetchOfferAction, toggleFavorite } from '../../store/api-action';
 import { useEffect } from 'react';
-import { AuthStatus, ResourceStatus } from '../../const';
+import { AuthStatus, cities, ResourceStatus, typeMap } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFound from '../not-found/not-found';
-import { getNearbyOffers, getOffer, getOfferStatus, getReviews } from '../../store/app-data/selectors';
+import { getNearbyOffers, getOffer, getOfferStatus, getPreparedReviews } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-data/selectors';
+import classNames from 'classnames';
+
+const MAX_IMAGES = 6;
 
 
 function PropertyPage(): JSX.Element {
 
   const {id} = useParams<{id: string}>();
 
-  const reviews = useSelector(getReviews);
+  const reviews = useSelector(getPreparedReviews);
   const nearbyOffers = useSelector(getNearbyOffers);
   const authStatus = useSelector(getAuthStatus);
   const offer = useSelector(getOffer);
@@ -40,6 +43,12 @@ function PropertyPage(): JSX.Element {
     return <NotFound />;
   }
 
+  const handlerBookmarkButtonClick = () => {
+    dispatch(toggleFavorite(offer!.id, !offer!.isFavorite));
+  };
+
+  const city = cities.find((it) => it.name === offer?.city.name);
+
   return (
     <div className="page">
       <Header />
@@ -47,16 +56,14 @@ function PropertyPage(): JSX.Element {
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
-            <PropertyGallery images={offer!.images} />
+            <PropertyGallery images={offer!.images.slice(0, MAX_IMAGES)} />
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {offer!.isPremium && <div className="property__mark"><span>Premium</span></div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{offer!.title}</h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={classNames('property__bookmark-button button', {'property__bookmark-button--active': offer!.isFavorite})} type="button" onClick={handlerBookmarkButtonClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -72,7 +79,7 @@ function PropertyPage(): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {offer!.type}
+                  {typeMap[offer!.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {offer!.bedrooms} Bedrooms
@@ -92,7 +99,7 @@ function PropertyPage(): JSX.Element {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={classNames('property__avatar-wrapper user__avatar-wrapper', {'property__avatar-wrapper--pro': offer!.host.isPro})}>
                     <img className="property__avatar user__avatar" src={offer!.host.avatar} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
@@ -113,12 +120,12 @@ function PropertyPage(): JSX.Element {
               </section>
             </div>
           </div>
-          <MapComponent offers={nearbyOffers} className="property__map" />
+          <MapComponent city={city!} offers={nearbyOffers.concat(offer!)} selectedOffer={offer!} className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList offers={nearbyOffers} className="near-places__list" classNameCard="near-places__card" />
+            <PlacesList offers={nearbyOffers} className="near-places__list" classNameCard="near-places__card" isDispatchHover={false}/>
           </section>
         </div>
       </main>

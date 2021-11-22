@@ -1,14 +1,19 @@
+import { Link } from "react-router-dom";
+import { AppRoute } from "../../const";
+
 const styles = {
   display: 'grid',
-  alignItems: 'center',
+  alignContent: 'center',
   justifyContent: 'center',
+  placeItems: 'center',
   height: '100vh',
 };
 
 function NotFound(): JSX.Element {
   return (
     <div style={styles}>
-      <strong>404 Not Found</strong>
+      <h1>404 Not Found</h1>
+      <Link to={AppRoute.Main}>Go to the main page</Link>
     </div>
   );
 }

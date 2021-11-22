@@ -5,8 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
 import { Hotel } from '../../types/hotel';
 import { URL_PIN_ACTIVE, URL_PIN_DEFAULT } from '../../const';
-import { useSelector } from 'react-redux';
-import { getCurrentCity, getHoveredHotel } from '../../store/app-process/selectors';
+import { City } from '../../types/city';
 
 const defaultIcon = leaflet.icon({
   iconUrl: URL_PIN_DEFAULT,
@@ -24,17 +23,17 @@ const markersGroup = leaflet.layerGroup();
 
 type MapComponentProps = {
   offers: Hotel[],
+  city: City,
   className?: string,
+  selectedOffer?: Hotel,
 }
 
 const markers = new Map<number, leaflet.Marker>();
 
-function MapComponent({offers, className}: MapComponentProps): JSX.Element {
+function MapComponent({offers, className, city, selectedOffer}: MapComponentProps): JSX.Element {
   const mapRef = useRef(null);
-  const currentCity = useSelector(getCurrentCity);
-  const map = useMap(mapRef, currentCity);
+  const map = useMap(mapRef, city);
   const [activeMarker, setActiveMarker] = useState<leaflet.Marker>();
-  const hoveredHotel = useSelector(getHoveredHotel);
 
   useEffect(() => {
     if (map) {
@@ -43,11 +42,12 @@ function MapComponent({offers, className}: MapComponentProps): JSX.Element {
       markers.clear();
 
       offers.forEach((offer) => {
+        const icon = (selectedOffer && offer.id === selectedOffer.id) ? activeIcon : defaultIcon;
         const marker = leaflet.marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         }, {
-          icon: defaultIcon,
+          icon,
         });
         markers.set(offer.id, marker);
         marker.addTo(markersGroup);
@@ -57,12 +57,12 @@ function MapComponent({offers, className}: MapComponentProps): JSX.Element {
 
   useEffect(() => {
     activeMarker?.setIcon(defaultIcon);
-    if (hoveredHotel) {
-      const marker = markers.get(hoveredHotel.id);
+    if (selectedOffer) {
+      const marker = markers.get(selectedOffer.id);
       marker?.setIcon(activeIcon);
       setActiveMarker(marker);
     }
-  }, [hoveredHotel]);
+  }, [selectedOffer]);
 
   return (
     <section className={classNames('map', className)} ref={mapRef}></section>

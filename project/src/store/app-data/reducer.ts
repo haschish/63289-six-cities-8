@@ -34,6 +34,9 @@ const appDataReducer = createReducer(initialState, (builder) => {
       if (index !== -1) {
         state.offers[index] = action.payload;
       }
+      if (state.offer?.id === action.payload.id) {
+        state.offer = action.payload;
+      }
     })
     .addCase(loadReviews, (state, action) => {
       state.reviewStatus = action.payload.status;

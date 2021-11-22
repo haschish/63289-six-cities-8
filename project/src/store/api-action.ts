@@ -5,7 +5,7 @@ import { dropToken, saveToken } from '../server/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { ReviewFromServer } from '../types/review';
-import { redirectToRoute } from './action';
+import { redirectToRoute } from './app-process/action';
 import { requireAuthorization, requireLogout } from './user-data/action';
 import { deleteFavorite, loadFavorites, loadNearbyOffers, loadOffer, loadOffers, loadReviews, sendReview, updateOffer } from './app-data/action';
 import { getAuthStatus } from './user-data/selectors';
