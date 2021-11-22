@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import NotFound from '../not-found/not-found';

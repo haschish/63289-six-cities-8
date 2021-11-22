@@ -23,7 +23,7 @@ export const getPreparedOffers = createSelector(
       case 'price-desc': return filteredOffers.slice().sort((a, b) => b.price - a.price);
       case 'top-rated-first': return filteredOffers.slice().sort((a, b) => b.rating - a.rating);
     }
-  }
+  },
 );
 
 export const getOffer = (state: RootState) => state[NameSpace.AppData].offer;
@@ -35,7 +35,7 @@ export const getReviews = (state: RootState) => state[NameSpace.AppData].reviews
 export const getPreparedReviews = createSelector(
   getReviews,
   (reviews) => reviews.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_REVIEWS),
-)
+);
 
 export const getNearbyOffers = (state: RootState) => state[NameSpace.AppData].nearbyOffers;
 

@@ -13,9 +13,14 @@ import { getAuthStatus } from './user-data/selectors';
 
 export const fetchOffersAction = (): ThunkActionResult =>
   async(dispatch, _getState, api): Promise<void> => {
-
-    const {data} = await api.get<HotelFromServer[]>(APIRoute.Offers);
-    dispatch(loadOffers(ResourceStatus.Loaded, data.map((it) => convertHotelToClient(it))));
+    try {
+      const {data} = await api.get<HotelFromServer[]>(APIRoute.Offers);
+      dispatch(loadOffers(ResourceStatus.Loaded, data.map((it) => convertHotelToClient(it))));
+    } catch (e) {
+      if (axios.isAxiosError(e) && !e.response) {
+        dispatch(loadOffers(ResourceStatus.Timeout));
+      }
+    }
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getCurrentSort, getHoveredHotel } from '../../../store/app-process/selectors';
+import { getHoveredHotel } from '../../../store/app-process/selectors';
 import { City } from '../../../types/city';
 import { Hotel } from '../../../types/hotel';
 import MapComponent from '../../map-component/map-component';
@@ -13,7 +13,6 @@ type PlacesProps = {
 }
 
 function Places({city, offers}: PlacesProps): JSX.Element {
-  const currentSort = useSelector(getCurrentSort);
   const hoveredHotel = useSelector(getHoveredHotel);
   if (offers.length === 0) {
     return <NoPlaces city={city} />;

@@ -22,6 +22,7 @@ export enum ResourceStatus {
   NotFound = 'notFound',
   Error = 'error',
   Unknown = 'unknown',
+  Timeout = 'timeout',
 }
 
 export const URL_PIN_DEFAULT = 'img/pin.svg';

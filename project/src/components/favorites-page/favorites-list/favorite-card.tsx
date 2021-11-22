@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { generatePath } from 'react-router';
 import { AppRoute } from '../../../const';
 import { toggleFavorite } from '../../../store/api-action';
 import { Hotel } from '../../../types/hotel';
@@ -16,10 +17,12 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
     dispatch(toggleFavorite(offer.id, !offer.isFavorite));
   };
 
+  const link = generatePath(AppRoute.Room, offer);
+
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Room}>
+        <Link to={link}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
@@ -38,7 +41,7 @@ function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
         </div>
         <Rating value={offer.rating}/>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Room}>{offer.title}</Link>
+          <Link to={link}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
