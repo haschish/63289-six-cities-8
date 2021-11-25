@@ -101,14 +101,11 @@ export const toggleFavorite = (hotelId: number, status: boolean): ThunkActionRes
       dispatch(redirectToRoute(AppRoute.SignIn));
       return;
     }
-    try {
-      const {data} = await api.post<HotelFromServer>(`/favorite/${hotelId}/${Number(status)}`);
-      const offer = convertHotelToClient(data);
-      dispatch(updateOffer(offer));
-      if (!offer.isFavorite) {
-        dispatch(deleteFavorite(offer));
-      }
-    } catch(e) {
+    const {data} = await api.post<HotelFromServer>(`/favorite/${hotelId}/${Number(status)}`);
+    const offer = convertHotelToClient(data);
+    dispatch(updateOffer(offer));
+    if (!offer.isFavorite) {
+      dispatch(deleteFavorite(offer));
     }
   };
 
