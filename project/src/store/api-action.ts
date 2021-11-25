@@ -80,7 +80,6 @@ export const fetchNearbyAction = (id: number): ThunkActionResult =>
       dispatch(loadNearbyOffers(ResourceStatus.Loaded, data.map((it) => convertHotelToClient(it))));
     } catch (e) {
       dispatch(loadNearbyOffers(ResourceStatus.Error));
-      // dispatch()
     }
   };
 
@@ -110,7 +109,6 @@ export const toggleFavorite = (hotelId: number, status: boolean): ThunkActionRes
         dispatch(deleteFavorite(offer));
       }
     } catch(e) {
-      // dispatch(()=>{});
     }
   };
 
